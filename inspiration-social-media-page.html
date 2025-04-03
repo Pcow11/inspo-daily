@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Inspiration | Motivate Your Mind</title>
+    <style>
+        :root {
+            --primary-color: #4F46E5;
+            --secondary-color: #10B981;
+            --accent-color: #F59E0B;
+            --dark-color: #111827;
+            --light-color: #F3F4F6;
+            --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-secondary: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/api/placeholder/800/400') center/cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        header .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        nav {
+            background-color: var(--dark-color);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .quote-of-the-day {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .quote-of-the-day::before {
+            content: '"';
+            font-size: 6rem;
+            color: rgba(79, 70, 229, 0.1);
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-family: var(--font-secondary);
+            line-height: 1;
+        }
+
+        .quote-of-the-day h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .quote-of-the-day blockquote {
+            font-family: var(--font-secondary);
+            font-size: 1.6rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .quote-of-the-day cite {
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-style: normal;
+        }
+
+        .inspiration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .inspiration-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .inspiration-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-content h3 {
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .card-content p {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .read-more:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .motivation-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .motivation-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .motivation-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 1.5rem;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            transition: transform 0.3s;
+        }
+
+        .step:hover {
+            transform: scale(1.03);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            line-height: 50px;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .step h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .testimonials {
+            margin-bottom: 3rem;
+        }
+
+        .testimonials h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            margin: 0;
+            color: var(--dark-color);
+        }
+
+        .author-info small {
+            color: #777;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 3rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .primary-button {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        .secondary-button {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .newsletter {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .newsletter h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 0.5rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .newsletter-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background-color: var(--accent-color);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        @media screen and (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .motivation-steps {
+                flex-direction: column;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-button {
+                width: 100%;
+                padding: 0.8rem;
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="content">
+            <h1>Daily Inspiration</h1>
+            <p>Elevate your mind, transform your life, one inspiration at a time.</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#motivation">Motivation</a></li>
+            <li><a href="#success-stories">Success Stories</a></li>
+            <li><a href="#resources">Resources</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main id="home">
+        <section class="quote-of-the-day">
+            <h2>Quote of the Day</h2>
+            <blockquote>
+                "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking."
+            </blockquote>
+            <cite>- Steve Jobs</cite>
+        </section>
+
+        <section class="inspiration-grid">
+            <article class="inspiration-card">
+                <img class="card-image" src="/api/placeholder/400/400" alt="Mindset mastery">
+                <div class="card-content">
+                    <h3>Mindset Mastery</h3>
+                    <p>Discover how to reprogram your mindset for success and overcome limiting beliefs that have been holding you back.</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+            </article>
+
+            <article class="inspiration-card">
+                <img class="card-image" src="/api/placeholder/400/400" alt="Daily habits">
+                <div class="card-content">
+                    <h3>5 Daily Habits of Success</h3>
+                    <p>Learn the simple yet powerful daily routines that successful people use to stay productive and achieve their goals.</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+            </article>
+
+            <article class="inspiration-card">
+                <img class="card-image" src="/api/placeholder/400/400" alt="Productivity tips">
+                <div class="card-content">
+                    <h3>Productivity Breakthrough</h3>
+                    <p>Simple strategies to multiply your productivity and accomplish more in less time while maintaining balance.</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+            </article>
+        </section>
+
+        <section id="motivation" class="motivation-section">
+            <h2>Your 3-Step Path to Motivation</h2>
+            <div class="motivation-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Find Your Why</h3>
+                    <p>Discover the deep-rooted reasons that drive your ambitions and create a purpose that pulls you forward even on difficult days.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Build Momentum</h3>
+                    <p>Learn how small consistent actions create powerful momentum that makes motivation automatic and achievement inevitable.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Celebrate Progress</h3>
+                    <p>Implement a system for recognizing your wins, reinforcing positive behaviors, and maintaining motivation for the long term.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="success-stories" class="testimonials">
+            <h2>Inspiration in Action</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p>"Following the advice from Daily Inspiration completely changed my approach to challenges. Instead of fearing obstacles, I now see them as opportunities for growth."</p>
+                    <div class="testimonial-author">
+                        <img class="author-avatar" src="/api/placeholder/100/100" alt="Sarah J.">
+                        <div class="author-info">
+                            <h4>Sarah J.</h4>
+                            <small>Entrepreneur & Mom</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <p>"The daily motivation tips have helped me stay focused and consistent with my goals. I've accomplished more in 3 months than I did all of last year!"</p>
+                    <div class="testimonial-author">
+                        <img class="author-avatar" src="/api/placeholder/100/100" alt="Michael T.">
+                        <div class="author-info">
+                            <h4>Michael T.</h4>
+                            <small>Fitness Coach</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <p>"I look forward to each morning's inspiration. It sets a positive tone for my day and reminds me to focus on what truly matters in life and business."</p>
+                    <div class="testimonial-author">
+                        <img class="author-avatar" src="/api/placeholder/100/100" alt="Priya K.">
+                        <div class="author-info">
+                            <h4>Priya K.</h4>
+                            <small>Creative Director</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Take Your Inspiration to the Next Level</h2>
+            <p>Join our community of motivated individuals who are committed to growth, positivity, and achieving their fullest potential.</p>
+            <div class="cta-buttons">
+                <a href="#" class="cta-button primary-button">Join Community</a>
+                <a href="#" class="cta-button secondary-button">Learn More</a>
+            </div>
+        </section>
+
+        <section id="resources" class="newsletter">
+            <h2>Get Daily Inspiration Delivered</h2>
+            <p>Subscribe to our newsletter and receive motivational quotes, success strategies, and exclusive resources directly to your inbox.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Your email address" required>
+                <button type="submit" class="newsletter-button">Subscribe</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Daily Inspiration</h3>
+                <p>We're dedicated to helping you unlock your full potential through daily motivation, practical advice, and inspirational content.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#motivation">Motivation</a></li>
+                    <li><a href="#success-stories">Success Stories</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link">FB</a>
+                    <a href="#" class="social-link">IG</a>
+                    <a href="#" class="social-link">TW</a>
+                    <a href="#" class="social-link">YT</a>
+                    <a href="#" class="social-link">PT</a>
+                </div>
+                <p style="margin-top: 1rem">Follow us for daily doses of inspiration!</p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2025 Daily Inspiration. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
